@@ -170,7 +170,7 @@
 - name: fetch host keys
   ansible.builtin.shell: aws ec2 get-console-output --region {{ aws_region }} --instance-id {{ item[2] }} --output text|sed -n 's/ecdsa-sha2-nistp256 \([^ ]*\).*/\1/p'
   register: aws_ec2_host_keys
-  until: aws_ec2_host_keys.stdout|length
+  until: aws_ec2_host_keys.stdout|length > 0
   delay: 30
   retries: 30
   with_list: "{{ aws_ec2_instance_data }}"
